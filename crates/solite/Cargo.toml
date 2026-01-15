@@ -1,18 +1,18 @@
 [package]
-name = "sol"
+name = "solite"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
 authors.workspace = true
 rust-version.workspace = true
-description = "Simple and secure SOL transfer CLI using solana-keyring"
+description = "A lightweight CLI for interacting with Solana"
 readme = "README.md"
-keywords = ["solana", "sol", "transfer", "cli", "wallet"]
+keywords = ["solana", "cli", "wallet", "transfer", "lightweight"]
 categories = ["command-line-utilities", "cryptography"]
 
 [[bin]]
-name = "sol"
+name = "solite"
 path = "src/main.rs"
 
 [dependencies]

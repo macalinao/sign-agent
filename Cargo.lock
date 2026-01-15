@@ -3776,20 +3776,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sol"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "clap",
- "rpassword",
- "solana-client",
- "solana-credential-helper-client",
- "solana-keyring",
- "solana-sdk",
- "tokio",
-]
-
-[[package]]
 name = "solana-account"
 version = "2.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5821,6 +5807,20 @@ dependencies = [
  "solana-serialize-utils",
  "solana-short-vec",
  "solana-system-interface",
+]
+
+[[package]]
+name = "solite"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "rpassword",
+ "solana-client",
+ "solana-credential-helper-client",
+ "solana-keyring",
+ "solana-sdk",
+ "tokio",
 ]
 
 [[package]]
