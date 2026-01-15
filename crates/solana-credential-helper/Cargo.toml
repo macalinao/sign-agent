@@ -1,10 +1,15 @@
 [package]
 name = "solana-credential-helper"
-version = "0.1.0"
+version.workspace = true
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
-description = "Solana transaction signing helper CLI"
+authors.workspace = true
+rust-version.workspace = true
+description = "Solana transaction signing helper CLI for secure offline signing"
+readme = "README.md"
+keywords = ["solana", "signing", "transaction", "credential", "helper"]
+categories = ["command-line-utilities", "cryptography"]
 
 [[bin]]
 name = "solana-credential-helper"

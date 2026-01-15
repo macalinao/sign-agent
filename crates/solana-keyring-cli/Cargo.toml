@@ -1,10 +1,15 @@
 [package]
 name = "solana-keyring-cli"
-version = "0.1.0"
+version.workspace = true
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
-description = "CLI tool for managing Solana keyring"
+authors.workspace = true
+rust-version.workspace = true
+description = "CLI tool for managing Solana keyring - generate, import, export keys"
+readme = "README.md"
+keywords = ["solana", "keyring", "cli", "wallet", "keys"]
+categories = ["command-line-utilities", "cryptography"]
 
 [[bin]]
 name = "solana-keyring"

@@ -1,10 +1,15 @@
 [package]
 name = "solana-keyring"
-version = "0.1.0"
+version.workspace = true
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
+authors.workspace = true
+rust-version.workspace = true
 description = "Secure keyring library for Solana with encrypted storage, Ledger, and Squads support"
+readme = "README.md"
+keywords = ["solana", "keyring", "wallet", "ledger", "crypto"]
+categories = ["cryptography", "authentication"]
 
 [dependencies]
 # Solana

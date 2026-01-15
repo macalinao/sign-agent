@@ -1,10 +1,15 @@
 [package]
 name = "solana-credential-helper-client"
-version = "0.1.0"
+version.workspace = true
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
-description = "Client library for interacting with solana-credential-helper"
+authors.workspace = true
+rust-version.workspace = true
+description = "Rust client library for Solana transaction signing via credential helper"
+readme = "README.md"
+keywords = ["solana", "signing", "client", "transaction", "wallet"]
+categories = ["cryptography", "api-bindings"]
 
 [dependencies]
 # Solana
