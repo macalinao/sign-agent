@@ -1,11 +1,10 @@
 [package]
 name = "solana-keyring-biometric"
-version.workspace = true
+version = "0.1.0"
 edition.workspace = true
-license.workspace = true
-repository.workspace = true
-authors.workspace = true
-rust-version.workspace = true
+license = "Apache-2.0"
+repository = "https://github.com/macalinao/sign-agent"
+authors = ["Ian Macalinao <me@ianm.com>"]
 description = "Biometric authentication (TouchID) for Solana keyring"
 readme = "README.md"
 keywords = ["biometric", "touchid", "authentication", "macos", "solana"]
