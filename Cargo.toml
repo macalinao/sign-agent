@@ -7,7 +7,7 @@ edition = "2024"
 
 [workspace.dependencies]
 # Solana
-solana-sdk = "2.2"
+solana-sdk = "3.0"
 solana-client = "2.2"
 
 # Crypto
