@@ -1,0 +1,24 @@
+[package]
+name = "solana-keyring-cli"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "CLI tool for managing Solana keyring"
+
+[[bin]]
+name = "solana-keyring"
+path = "src/main.rs"
+
+[dependencies]
+solana-keyring.workspace = true
+
+clap.workspace = true
+rpassword.workspace = true
+anyhow.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+dirs.workspace = true
+
+[lints]
+workspace = true
