@@ -1,0 +1,33 @@
+[package]
+name = "solana-actor-squads"
+version = "0.1.0"
+edition.workspace = true
+license = "Apache-2.0"
+repository = "https://github.com/macalinao/sign-agent"
+authors = ["Ian Macalinao <me@ianm.com>"]
+description = "Squads multisig transport for Solana credential provider operations"
+readme = "README.md"
+keywords = ["solana", "credential", "squads", "multisig", "transport"]
+categories = ["cryptography", "authentication"]
+
+[dependencies]
+# Core credential provider traits
+solana-actor.workspace = true
+
+# Solana
+solana-sdk.workspace = true
+solana-client.workspace = true
+solana-commitment-config.workspace = true
+
+# Serialization
+borsh.workspace = true
+
+# Async
+async-trait.workspace = true
+tokio = { workspace = true, features = ["time"] }
+
+# Error handling
+thiserror.workspace = true
+
+[lints]
+workspace = true

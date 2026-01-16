@@ -1,0 +1,36 @@
+[package]
+name = "solana-actor-keypair"
+version = "0.1.0"
+edition.workspace = true
+license = "Apache-2.0"
+repository = "https://github.com/macalinao/sign-agent"
+authors = ["Ian Macalinao <me@ianm.com>"]
+description = "Keypair-based signer for Solana with secure memory handling"
+readme = "README.md"
+keywords = ["solana", "credential", "keypair", "signer", "crypto"]
+categories = ["cryptography", "authentication"]
+
+[dependencies]
+# Core credential provider traits
+solana-actor.workspace = true
+
+# Solana
+solana-sdk.workspace = true
+
+# Crypto
+ed25519-dalek.workspace = true
+zeroize.workspace = true
+rand.workspace = true
+
+# Serialization
+serde_json.workspace = true
+bs58.workspace = true
+
+# Error handling
+thiserror.workspace = true
+
+[dev-dependencies]
+tempfile = "3"
+
+[lints]
+workspace = true

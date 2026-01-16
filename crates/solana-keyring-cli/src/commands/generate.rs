@@ -8,7 +8,11 @@ use solana_keyring::keypair::generate_keypair;
 use super::{AgentConfig, agent_client, get_verified_passphrase, open_db};
 use crate::cli::GenerateArgs;
 
-pub fn run(args: GenerateArgs, db_path: &Option<PathBuf>, agent_config: &AgentConfig) -> Result<()> {
+pub fn run(
+    args: GenerateArgs,
+    db_path: &Option<PathBuf>,
+    agent_config: &AgentConfig,
+) -> Result<()> {
     // Try using agent first if requested
     if agent_config.use_agent {
         let socket_path = agent_config.socket_path();
@@ -19,8 +23,11 @@ pub fn run(args: GenerateArgs, db_path: &Option<PathBuf>, agent_config: &AgentCo
         // Check if agent is available
         if rt.block_on(agent_client::is_agent_available(&socket_path)) {
             // Generate via agent
-            let result =
-                rt.block_on(agent_client::generate_keypair(&socket_path, &args.label, &args.tag))?;
+            let result = rt.block_on(agent_client::generate_keypair(
+                &socket_path,
+                &args.label,
+                &args.tag,
+            ))?;
 
             println!("Generated keypair:");
             println!("  Public key: {}", result.pubkey);

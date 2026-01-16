@@ -1,0 +1,30 @@
+[package]
+name = "solana-actor-ledger"
+version = "0.1.0"
+edition.workspace = true
+license = "Apache-2.0"
+repository = "https://github.com/macalinao/sign-agent"
+authors = ["Ian Macalinao <me@ianm.com>"]
+description = "Ledger hardware wallet signer for Solana"
+readme = "README.md"
+keywords = ["solana", "credential", "ledger", "hardware", "signer"]
+categories = ["cryptography", "authentication", "hardware-support"]
+
+[dependencies]
+# Core credential provider traits
+solana-actor.workspace = true
+
+# Solana
+solana-sdk.workspace = true
+
+# Ledger HID
+hidapi.workspace = true
+
+# Serialization
+bs58.workspace = true
+
+# Error handling
+thiserror.workspace = true
+
+[lints]
+workspace = true

@@ -3445,6 +3445,58 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-actor"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "solana-client",
+ "solana-commitment-config",
+ "solana-sdk",
+ "thiserror 2.0.17",
+ "tokio",
+]
+
+[[package]]
+name = "solana-actor-keypair"
+version = "0.1.0"
+dependencies = [
+ "bs58",
+ "ed25519-dalek",
+ "rand 0.8.5",
+ "serde_json",
+ "solana-actor",
+ "solana-sdk",
+ "tempfile",
+ "thiserror 2.0.17",
+ "zeroize",
+]
+
+[[package]]
+name = "solana-actor-ledger"
+version = "0.1.0"
+dependencies = [
+ "bs58",
+ "hidapi",
+ "solana-actor",
+ "solana-sdk",
+ "thiserror 2.0.17",
+]
+
+[[package]]
+name = "solana-actor-squads"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "borsh",
+ "solana-actor",
+ "solana-client",
+ "solana-commitment-config",
+ "solana-sdk",
+ "thiserror 2.0.17",
+ "tokio",
+]
+
+[[package]]
 name = "solana-address"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
