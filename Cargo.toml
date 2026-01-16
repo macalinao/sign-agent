@@ -7,47 +7,49 @@ edition = "2024"
 
 [workspace.dependencies]
 # Solana
-solana-sdk = "2.2"
-solana-client = "2.2"
+solana-sdk = "^3"
+solana-client = "^3"
+solana-commitment-config = "^3"
+solana-system-interface = { version = "^3", features = ["bincode"] }
 
 # Crypto
-aes-gcm = "0.10"
-argon2 = "0.5"
-ed25519-dalek = { version = "2.1", features = ["rand_core"] }
-rand = "0.8"
-zeroize = { version = "1.8", features = ["derive"] }
+aes-gcm = "^0.10"
+argon2 = "^0.5"
+ed25519-dalek = { version = "^2.1", features = ["rand_core"] }
+rand = "^0.8"
+zeroize = { version = "^1.8", features = ["derive"] }
 
 # Database
-rusqlite = { version = "0.32", features = ["bundled"] }
+rusqlite = { version = "^0.32", features = ["bundled"] }
 
 # CLI
-clap = { version = "4", features = ["derive"] }
-rpassword = "7"
+clap = { version = "^4", features = ["derive"] }
+rpassword = "^7"
 
 # Async
-tokio = { version = "1", features = ["full", "net"] }
+tokio = { version = "^1", features = ["full", "net"] }
 
 # Serialization
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-base64 = "0.22"
-bs58 = "0.5"
+serde = { version = "^1", features = ["derive"] }
+serde_json = "^1"
+base64 = "^0.22"
+bs58 = "^0.5"
 
 # Error handling
-anyhow = "1"
-thiserror = "2"
+anyhow = "^1"
+thiserror = "^2"
 
 # Ledger
-hidapi = "2.6"
+hidapi = "^2.6"
 
 # Borsh for Squads serialization
-borsh = "1.5"
+borsh = "^1.5"
 
 # Notifications
-notify-rust = "4"
+notify-rust = "^4"
 
 # Paths
-dirs = "6"
+dirs = "^6"
 
 # Internal crates
 solana-keyring = { path = "crates/solana-keyring" }
@@ -56,7 +58,8 @@ solana-credential-helper-client = { path = "crates/solana-credential-helper-clie
 
 [workspace.lints.rust]
 missing_docs = "warn"
-# Note: unused_crate_dependencies has false positives with workspace dependencies
+# unused_crate_dependencies has false positives in workspace setups
+# (fires on transitive deps that ARE used in their own crates)
 
 [workspace.lints.clippy]
 missing_errors_doc = "warn"

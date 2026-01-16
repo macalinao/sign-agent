@@ -14,6 +14,7 @@ categories = ["cryptography", "authentication"]
 # Solana
 solana-sdk.workspace = true
 solana-client.workspace = true
+solana-commitment-config.workspace = true
 
 # Crypto
 aes-gcm.workspace = true

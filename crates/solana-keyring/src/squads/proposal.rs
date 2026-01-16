@@ -1,9 +1,7 @@
 //! Squads proposal creation and approval
 
-use solana_sdk::{
-    commitment_config::CommitmentConfig, pubkey::Pubkey, signature::Signer,
-    transaction::Transaction,
-};
+use solana_commitment_config::CommitmentConfig;
+use solana_sdk::{pubkey::Pubkey, signature::Signer, transaction::Transaction};
 
 use super::{
     SquadsSigner,

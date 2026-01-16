@@ -1,8 +1,8 @@
 //! Squads proposal execution
 
+use solana_commitment_config::CommitmentConfig;
 use solana_sdk::{
-    commitment_config::CommitmentConfig, instruction::AccountMeta, pubkey::Pubkey,
-    signature::Signer, transaction::Transaction,
+    instruction::AccountMeta, pubkey::Pubkey, signature::Signer, transaction::Transaction,
 };
 
 use super::{

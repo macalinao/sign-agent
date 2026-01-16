@@ -1,16 +1,14 @@
 //! Transfer SOL command
 
-#![allow(deprecated)] // system_instruction is deprecated but still works
-
 use std::io::{self, Write};
 
 use anyhow::Result;
 use solana_client::rpc_client::RpcClient;
 use solana_credential_helper_client::{CredentialHelperClient, CredentialHelperConfig, SignerType};
 use solana_sdk::{
-    native_token::LAMPORTS_PER_SOL, pubkey::Pubkey, signature::Signature, system_instruction,
-    transaction::Transaction,
+    native_token::LAMPORTS_PER_SOL, pubkey::Pubkey, signature::Signature, transaction::Transaction,
 };
+use solana_system_interface::instruction as system_instruction;
 
 use crate::cli::TransferArgs;
 
