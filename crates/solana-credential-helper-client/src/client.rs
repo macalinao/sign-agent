@@ -30,7 +30,8 @@ const DEFAULT_BINARY: &str = "solana-credential-helper";
 ///     .use_agent(true);
 ///
 /// let client = CredentialHelperClient::new(config);
-/// let signature = client.sign_transaction(&message_bytes).await?;
+/// let message_bytes = b"transaction message";
+/// let signature = client.sign_transaction(message_bytes).await?;
 /// # Ok(())
 /// # }
 /// ```
