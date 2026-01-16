@@ -5,10 +5,11 @@ use std::path::PathBuf;
 use anyhow::Result;
 use solana_keyring::keypair::{export_base58, export_json};
 
-use super::{get_verified_passphrase, open_db};
+use super::{AgentConfig, get_verified_passphrase, open_db};
 use crate::cli::{ExportArgs, ExportFormat};
 
-pub fn run(args: ExportArgs, db_path: &Option<PathBuf>) -> Result<()> {
+pub fn run(args: ExportArgs, db_path: &Option<PathBuf>, _agent_config: &AgentConfig) -> Result<()> {
+    // Note: Export doesn't use agent - we need direct passphrase access to decrypt
     let db = open_db(db_path)?;
     let passphrase = get_verified_passphrase(&db)?;
 

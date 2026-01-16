@@ -15,6 +15,14 @@ pub struct Cli {
     #[arg(long, global = true)]
     pub db_path: Option<PathBuf>,
 
+    /// Use the keyring agent (avoids passphrase prompts if agent is unlocked)
+    #[arg(long, global = true)]
+    pub use_agent: bool,
+
+    /// Agent socket path (default: ~/.solana-keyring/agent.sock)
+    #[arg(long, global = true)]
+    pub agent_socket: Option<PathBuf>,
+
     #[command(subcommand)]
     pub command: Commands,
 }

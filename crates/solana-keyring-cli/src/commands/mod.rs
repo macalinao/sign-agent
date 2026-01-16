@@ -1,6 +1,7 @@
 //! CLI command implementations
 
 pub mod address_book;
+pub mod agent_client;
 pub mod delete;
 pub mod export;
 pub mod generate;
@@ -16,6 +17,21 @@ use std::path::PathBuf;
 
 use anyhow::Result;
 use solana_keyring::{Database, default_db_path};
+
+/// Agent configuration for commands
+#[derive(Clone, Default)]
+pub struct AgentConfig {
+    pub use_agent: bool,
+    pub socket_path: Option<PathBuf>,
+}
+
+impl AgentConfig {
+    pub fn socket_path(&self) -> PathBuf {
+        self.socket_path
+            .clone()
+            .unwrap_or_else(agent_client::default_socket_path)
+    }
+}
 
 /// Get the database path, using the provided path or the default
 pub fn get_db_path(path: &Option<PathBuf>) -> PathBuf {

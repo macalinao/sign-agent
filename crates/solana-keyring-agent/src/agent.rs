@@ -12,7 +12,9 @@ use zeroize::Zeroizing;
 
 use solana_keyring::{Database, default_db_path, list_signers};
 
-use crate::protocol::{AgentStatus, ErrorCode, Request, Response, ResponseResult, SignerInfo};
+use crate::protocol::{
+    AgentStatus, ErrorCode, GeneratedKeypairInfo, Request, Response, ResponseResult, SignerInfo,
+};
 
 /// Agent state
 pub struct AgentState {
@@ -308,6 +310,87 @@ async fn process_request(request: Request, state: &Arc<RwLock<AgentState>>) -> R
                     Response::ok(ResponseResult::SignedTransaction(sig_b64))
                 }
                 Err(e) => Response::error(ErrorCode::SignerNotFound, e.to_string()),
+            }
+        }
+
+        Request::GenerateKeypair { label, tags } => {
+            let state = state.read().await;
+
+            if !state.is_unlocked() {
+                return Response::error(ErrorCode::Locked, "Agent is locked");
+            }
+
+            let passphrase = state.passphrase.as_ref().unwrap();
+
+            let db = match Database::open(&state.db_path) {
+                Ok(db) => db,
+                Err(e) => return Response::error(ErrorCode::InternalError, e.to_string()),
+            };
+
+            // Generate keypair
+            let keypair = solana_keyring::keypair::generate_keypair();
+            let pubkey = keypair.pubkey_base58();
+
+            // Convert tags to &str slice
+            let tag_refs: Vec<&str> = tags.iter().map(|s| s.as_str()).collect();
+
+            // Store in database
+            match db.store_keypair(&keypair, &label, passphrase, &tag_refs) {
+                Ok(()) => {
+                    let _ = solana_keyring::notify(
+                        "Keypair Generated",
+                        &format!("Generated keypair '{}': {}", label, pubkey),
+                    );
+                    Response::ok(ResponseResult::GeneratedKeypair(GeneratedKeypairInfo {
+                        pubkey,
+                        label,
+                    }))
+                }
+                Err(e) => Response::error(ErrorCode::InternalError, e.to_string()),
+            }
+        }
+
+        Request::ImportKeypair {
+            label,
+            secret_key,
+            tags,
+        } => {
+            let state = state.read().await;
+
+            if !state.is_unlocked() {
+                return Response::error(ErrorCode::Locked, "Agent is locked");
+            }
+
+            let passphrase = state.passphrase.as_ref().unwrap();
+
+            let db = match Database::open(&state.db_path) {
+                Ok(db) => db,
+                Err(e) => return Response::error(ErrorCode::InternalError, e.to_string()),
+            };
+
+            // Import keypair from base58
+            let keypair = match solana_keyring::keypair::import_base58(&secret_key) {
+                Ok(k) => k,
+                Err(e) => return Response::error(ErrorCode::InternalError, e.to_string()),
+            };
+            let pubkey = keypair.pubkey_base58();
+
+            // Convert tags to &str slice
+            let tag_refs: Vec<&str> = tags.iter().map(|s| s.as_str()).collect();
+
+            // Store in database
+            match db.store_keypair(&keypair, &label, passphrase, &tag_refs) {
+                Ok(()) => {
+                    let _ = solana_keyring::notify(
+                        "Keypair Imported",
+                        &format!("Imported keypair '{}': {}", label, pubkey),
+                    );
+                    Response::ok(ResponseResult::GeneratedKeypair(GeneratedKeypairInfo {
+                        pubkey,
+                        label,
+                    }))
+                }
+                Err(e) => Response::error(ErrorCode::InternalError, e.to_string()),
             }
         }
 

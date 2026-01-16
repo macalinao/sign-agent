@@ -23,6 +23,24 @@ pub enum Request {
         signer: String,
     },
 
+    /// Generate a new keypair and store it
+    GenerateKeypair {
+        /// Label for the new keypair
+        label: String,
+        /// Tags to add to the keypair
+        tags: Vec<String>,
+    },
+
+    /// Import a keypair from base58 secret key
+    ImportKeypair {
+        /// Label for the keypair
+        label: String,
+        /// Base58 encoded secret key
+        secret_key: String,
+        /// Tags to add to the keypair
+        tags: Vec<String>,
+    },
+
     /// Unlock the keyring (provide master passphrase)
     Unlock {
         /// Master passphrase
@@ -70,8 +88,16 @@ pub enum ResponseResult {
     Pong,
     Signers(Vec<SignerInfo>),
     SignedTransaction(String), // Base64 encoded signed transaction
+    GeneratedKeypair(GeneratedKeypairInfo),
     Status(AgentStatus),
     Unit,
+}
+
+/// Generated keypair information
+#[derive(Debug, Serialize, Deserialize)]
+pub struct GeneratedKeypairInfo {
+    pub pubkey: String,
+    pub label: String,
 }
 
 /// Signer information
