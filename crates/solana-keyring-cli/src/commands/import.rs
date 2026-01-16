@@ -16,23 +16,32 @@ pub fn run(args: ImportArgs, db_path: &Option<PathBuf>, agent_config: &AgentConf
         let socket_path = agent_config.socket_path();
         let rt = tokio::runtime::Runtime::new()?;
 
-        if rt.block_on(agent_client::is_agent_available(&socket_path)) {
-            let result = rt.block_on(agent_client::import_keypair(
-                &socket_path,
-                &args.label,
-                base58,
-                &args.tag,
-            ))?;
+        let availability = rt.block_on(agent_client::check_agent_availability(&socket_path));
+        match availability {
+            agent_client::AgentAvailability::Available => {
+                let result = rt.block_on(agent_client::import_keypair(
+                    &socket_path,
+                    &args.label,
+                    base58,
+                    &args.tag,
+                ))?;
 
-            println!("Imported keypair:");
-            println!("  Public key: {}", result.pubkey);
-            println!("  Label: {}", result.label);
-            if !args.tag.is_empty() {
-                println!("  Tags: {}", args.tag.join(", "));
+                println!("Imported keypair:");
+                println!("  Public key: {}", result.pubkey);
+                println!("  Label: {}", result.label);
+                if !args.tag.is_empty() {
+                    println!("  Tags: {}", args.tag.join(", "));
+                }
+                return Ok(());
             }
-            return Ok(());
-        } else {
-            println!("Agent not available or not unlocked, falling back to passphrase prompt...");
+            agent_client::AgentAvailability::Locked => {
+                println!("Agent is running but locked. Run 'solana-keyring-agent unlock' first.");
+                println!("Falling back to passphrase prompt...");
+            }
+            agent_client::AgentAvailability::NotRunning => {
+                println!("Agent is not running. Run 'solana-keyring-agent start' to start it.");
+                println!("Falling back to passphrase prompt...");
+            }
         }
     }
 

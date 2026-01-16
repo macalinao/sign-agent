@@ -21,23 +21,32 @@ pub fn run(
         let rt = tokio::runtime::Runtime::new()?;
 
         // Check if agent is available
-        if rt.block_on(agent_client::is_agent_available(&socket_path)) {
-            // Generate via agent
-            let result = rt.block_on(agent_client::generate_keypair(
-                &socket_path,
-                &args.label,
-                &args.tag,
-            ))?;
+        let availability = rt.block_on(agent_client::check_agent_availability(&socket_path));
+        match availability {
+            agent_client::AgentAvailability::Available => {
+                // Generate via agent
+                let result = rt.block_on(agent_client::generate_keypair(
+                    &socket_path,
+                    &args.label,
+                    &args.tag,
+                ))?;
 
-            println!("Generated keypair:");
-            println!("  Public key: {}", result.pubkey);
-            println!("  Label: {}", result.label);
-            if !args.tag.is_empty() {
-                println!("  Tags: {}", args.tag.join(", "));
+                println!("Generated keypair:");
+                println!("  Public key: {}", result.pubkey);
+                println!("  Label: {}", result.label);
+                if !args.tag.is_empty() {
+                    println!("  Tags: {}", args.tag.join(", "));
+                }
+                return Ok(());
             }
-            return Ok(());
-        } else {
-            println!("Agent not available or not unlocked, falling back to passphrase prompt...");
+            agent_client::AgentAvailability::Locked => {
+                println!("Agent is running but locked. Run 'solana-keyring-agent unlock' first.");
+                println!("Falling back to passphrase prompt...");
+            }
+            agent_client::AgentAvailability::NotRunning => {
+                println!("Agent is not running. Run 'solana-keyring-agent start' to start it.");
+                println!("Falling back to passphrase prompt...");
+            }
         }
     }
 

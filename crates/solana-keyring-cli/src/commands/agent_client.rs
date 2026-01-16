@@ -93,13 +93,30 @@ pub async fn send_request(socket_path: &PathBuf, request: &Request) -> Result<Re
     Ok(response)
 }
 
-/// Check if the agent is running and unlocked
-pub async fn is_agent_available(socket_path: &PathBuf) -> bool {
+/// Agent availability status
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum AgentAvailability {
+    /// Agent is running and unlocked
+    Available,
+    /// Agent is running but locked
+    Locked,
+    /// Agent is not running
+    NotRunning,
+}
+
+/// Check the agent's availability status
+pub async fn check_agent_availability(socket_path: &PathBuf) -> AgentAvailability {
     match send_request(socket_path, &Request::Status).await {
         Ok(Response::Ok {
             result: ResponseResult::Status(status),
-        }) => status.unlocked,
-        _ => false,
+        }) => {
+            if status.unlocked {
+                AgentAvailability::Available
+            } else {
+                AgentAvailability::Locked
+            }
+        }
+        _ => AgentAvailability::NotRunning,
     }
 }
 
