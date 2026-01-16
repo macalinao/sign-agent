@@ -15,12 +15,9 @@ use crate::cli::TransferArgs;
 pub async fn run(args: TransferArgs) -> Result<()> {
     let rpc = RpcClient::new(&args.rpc);
 
-    // Resolve source address
+    // Resolve source and destination addresses (can be pubkeys or labels)
     let from_pubkey = resolve_address(&args.from, args.db_path.as_ref())?;
-    let to_pubkey: Pubkey = args
-        .to
-        .parse()
-        .map_err(|_| anyhow::anyhow!("Invalid destination address: {}", args.to))?;
+    let to_pubkey = resolve_address(&args.to, args.db_path.as_ref())?;
 
     let lamports = (args.amount * LAMPORTS_PER_SOL as f64) as u64;
 
@@ -29,7 +26,7 @@ pub async fn run(args: TransferArgs) -> Result<()> {
 
     println!("Transfer Details:");
     println!("  From: {} ({})", args.from, from_pubkey);
-    println!("  To:   {}", to_pubkey);
+    println!("  To:   {} ({})", args.to, to_pubkey);
     println!("  Amount: {} SOL ({} lamports)", args.amount, lamports);
     println!(
         "  Current balance: {} SOL",

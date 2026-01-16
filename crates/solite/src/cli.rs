@@ -26,7 +26,7 @@ pub struct TransferArgs {
     #[arg(long)]
     pub from: String,
 
-    /// Destination address (public key)
+    /// Destination address (public key or label from keyring)
     #[arg(long)]
     pub to: String,
 
