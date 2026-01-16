@@ -13,7 +13,7 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
 
     let agent_config = AgentConfig {
-        use_agent: cli.use_agent,
+        use_agent: !cli.no_agent,
         socket_path: cli.agent_socket,
     };
 
