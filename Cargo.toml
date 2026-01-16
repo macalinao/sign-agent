@@ -16,7 +16,7 @@ solana-system-interface = { version = "^3", features = ["bincode"] }
 aes-gcm = "^0.10"
 argon2 = "^0.5"
 ed25519-dalek = { version = "^2.1", features = ["rand_core"] }
-rand = "^0.8"
+rand = "^0.9"
 zeroize = { version = "^1.8", features = ["derive"] }
 
 # Database
