@@ -18,7 +18,7 @@
     "lint": "eslint src/"
   },
   "dependencies": {
-    "@solana/kit": "^2.1.0"
+    "@solana/kit": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
