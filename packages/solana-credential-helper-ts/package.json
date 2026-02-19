@@ -21,7 +21,7 @@
     "@solana/kit": "^2.1.0"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
+    "@types/node": "^25.3.0",
     "bun-types": "latest",
     "typescript": "^5.7.0"
   },
