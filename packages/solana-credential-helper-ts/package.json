@@ -23,7 +23,7 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "bun-types": "latest",
-    "typescript": "^5.7.0"
+    "typescript": "^6.0.2"
   },
   "peerDependencies": {
     "@solana/kit": "^2.0.0"
